@@ -1,13 +1,39 @@
-import { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { CourseController } from '@/controllers/CourseController'
 
 const courseController = new CourseController()
 
+// CORS headers
+const corsHeaders = {
+  'Access-Control-Allow-Origin': 'http://localhost:3000',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Access-Control-Allow-Credentials': 'true',
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, { status: 200, headers: corsHeaders })
+}
+
 export async function GET(request: NextRequest) {
-  return courseController.getAllCourses(request)
+  const response = await courseController.getAllCourses(request)
+  
+  // Add CORS headers to response
+  Object.entries(corsHeaders).forEach(([key, value]) => {
+    response.headers.set(key, value)
+  })
+  
+  return response
 }
 
 export async function POST(request: NextRequest) {
-  return courseController.createCourse(request)
+  const response = await courseController.createCourse(request)
+  
+  // Add CORS headers to response
+  Object.entries(corsHeaders).forEach(([key, value]) => {
+    response.headers.set(key, value)
+  })
+  
+  return response
 }
 
