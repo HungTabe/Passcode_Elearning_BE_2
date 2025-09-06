@@ -15,7 +15,12 @@ export class CourseRepository {
       const course = await prisma.course.findUnique({
         where: { id }
       })
-      return course as CourseEntity | null
+      if (!course) return null
+      
+      return {
+        ...course,
+        lessons: (course as { lessonsCount?: number }).lessonsCount || 0
+      } as CourseEntity
     } catch (error) {
       logger.error('Error finding course by ID', error as Error, { id })
       throw error
@@ -27,7 +32,12 @@ export class CourseRepository {
       const course = await prisma.course.findUnique({
         where: { code }
       })
-      return course as CourseEntity | null
+      if (!course) return null
+      
+      return {
+        ...course,
+        lessons: (course as { lessonsCount?: number }).lessonsCount || 0
+      } as CourseEntity
     } catch (error) {
       logger.error('Error finding course by code', error as Error, { code })
       throw error
@@ -51,7 +61,8 @@ export class CourseRepository {
       
       return {
         ...course,
-        enrollmentsCount: course._count.enrollments
+        enrollmentsCount: course._count.enrollments,
+        lessons: course.lessons
       } as CourseWithDetails
     } catch (error) {
       logger.error('Error finding course with details', error as Error, { id })
@@ -67,7 +78,10 @@ export class CourseRepository {
         skip: offset,
         orderBy: { createdAt: 'desc' }
       })
-      return courses as CourseEntity[]
+      return courses.map(course => ({
+        ...course,
+        lessons: (course as { lessonsCount?: number }).lessonsCount || 0
+      })) as CourseEntity[]
     } catch (error) {
       logger.error('Error finding all courses', error as Error, { limit, offset, isActive })
       throw error
@@ -80,6 +94,7 @@ export class CourseRepository {
         data: {
           code: data.code,
           name: data.name,
+          title: data.title,
           description: data.description,
           videoUrl: data.videoUrl,
           thumbnail: data.thumbnail,
@@ -88,9 +103,21 @@ export class CourseRepository {
           duration: data.duration,
           level: data.level,
           isActive: data.isActive ?? true,
-        }
+          // Enhanced course information
+          instructor: data.instructor,
+          rating: data.rating ?? 0.0,
+          students: data.students ?? 0,
+          lessonsCount: data.lessons ?? 0,
+          category: data.category,
+          price: data.price,
+          image: data.image,
+          previewUrl: data.previewUrl,
+        } as Parameters<typeof prisma.course.create>[0]['data']
       })
-      return course as CourseEntity
+      return {
+        ...course,
+        lessons: (course as { lessonsCount?: number }).lessonsCount || 0
+      } as CourseEntity
     } catch (error) {
       logger.error('Error creating course', error as Error, { data })
       throw error
@@ -99,11 +126,20 @@ export class CourseRepository {
 
   async update(id: string, data: UpdateCourseRequest): Promise<CourseEntity> {
     try {
+      const updateData: Record<string, unknown> = { ...data }
+      if (data.lessons !== undefined) {
+        updateData.lessonsCount = data.lessons
+        delete updateData.lessons
+      }
+      
       const course = await prisma.course.update({
         where: { id },
-        data
+        data: updateData as Parameters<typeof prisma.course.update>[0]['data']
       })
-      return course as CourseEntity
+      return {
+        ...course,
+        lessons: (course as { lessonsCount?: number }).lessonsCount || 0
+      } as CourseEntity
     } catch (error) {
       logger.error('Error updating course', error as Error, { id, data })
       throw error
@@ -115,7 +151,10 @@ export class CourseRepository {
       const course = await prisma.course.delete({
         where: { id }
       })
-      return course as CourseEntity
+      return {
+        ...course,
+        lessons: (course as { lessonsCount?: number }).lessonsCount || 0
+      } as CourseEntity
     } catch (error) {
       logger.error('Error deleting course', error as Error, { id })
       throw error

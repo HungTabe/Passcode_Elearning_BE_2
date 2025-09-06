@@ -4,14 +4,24 @@ export interface CourseEntity {
   id: string
   code: string
   name: string
+  title: string
   description: string
   videoUrl: string
   thumbnail?: string
   requirements: string[]
   outcomes: string[]
-  duration: number
+  duration: number | string
   level: Level
   isActive: boolean
+  // New fields for enhanced course information
+  instructor: string
+  rating: number
+  students: number
+  lessons: number
+  category: string
+  price: number
+  image: string
+  previewUrl: string
   createdAt: Date
   updatedAt: Date
 }
@@ -19,6 +29,7 @@ export interface CourseEntity {
 export interface CreateCourseRequest {
   code: string
   name: string
+  title: string
   description: string
   videoUrl: string
   thumbnail?: string
@@ -27,11 +38,21 @@ export interface CreateCourseRequest {
   duration: number
   level: Level
   isActive?: boolean
+  // New fields for enhanced course information
+  instructor: string
+  rating?: number
+  students?: number
+  lessons?: number
+  category: string
+  price: number
+  image: string
+  previewUrl: string
 }
 
 export interface UpdateCourseRequest {
   code?: string
   name?: string
+  title?: string
   description?: string
   videoUrl?: string
   thumbnail?: string
@@ -40,9 +61,18 @@ export interface UpdateCourseRequest {
   duration?: number
   level?: Level
   isActive?: boolean
+  // New fields for enhanced course information
+  instructor?: string
+  rating?: number
+  students?: number
+  lessons?: number
+  category?: string
+  price?: number
+  image?: string
+  previewUrl?: string
 }
 
-export interface CourseWithDetails extends CourseEntity {
+export interface CourseWithDetails extends Omit<CourseEntity, 'lessons'> {
   lessons: LessonEntity[]
   enrollmentsCount: number
 }

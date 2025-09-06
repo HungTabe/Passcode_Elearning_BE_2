@@ -120,9 +120,10 @@ export class CourseController {
       const body: CreateCourseRequest = await request.json()
       
       // Validate required fields
-      if (!body.code || !body.name || !body.description || !body.videoUrl) {
+      if (!body.code || !body.name || !body.title || !body.description || !body.videoUrl || 
+          !body.instructor || !body.category || !body.image || !body.previewUrl) {
         return NextResponse.json(
-          { success: false, error: 'Code, name, description, and videoUrl are required' } as ErrorResponse,
+          { success: false, error: 'Code, name, title, description, videoUrl, instructor, category, image, and previewUrl are required' } as ErrorResponse,
           { status: 400 }
         )
       }

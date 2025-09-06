@@ -15,7 +15,10 @@ export async function GET(
           select: {
             id: true,
             name: true,
-            email: true
+            avatarUrl: true,
+            bio: true,
+            twitter: true,
+            linkedin: true,
           }
         },
         comments: {
@@ -39,7 +42,31 @@ export async function GET(
       )
     }
     
-    return NextResponse.json(post)
+    // shape to match mock detail
+    const shaped = {
+      id: post.id,
+      title: post.title,
+      excerpt: post.excerpt,
+      content: post.content,
+      author: {
+        name: post.author?.name ?? 'Unknown',
+        avatar: post.author?.avatarUrl ?? undefined,
+        bio: post.author?.bio ?? undefined,
+        twitter: post.author?.twitter ?? undefined,
+        linkedin: post.author?.linkedin ?? undefined,
+      },
+      category: post.category,
+      tags: post.tags,
+      publishedAt: post.publishedAt?.toISOString().slice(0, 10) ?? null,
+      readTime: post.readTime ? `${post.readTime} min read` : undefined,
+      image: post.featuredImage ?? undefined,
+      featured: post.featured,
+      views: post.views,
+      likes: (post as { likes?: number }).likes ?? 0,
+      comments: post.comments?.length ?? 0,
+    }
+
+    return NextResponse.json(shaped)
   } catch (error) {
     console.error('Error fetching blog post:', error)
     return NextResponse.json(

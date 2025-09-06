@@ -18,7 +18,13 @@ export class CourseService {
 
   async getCourseById(id: string): Promise<CourseEntity | null> {
     try {
-      return await this.courseRepository.findById(id)
+      const course = await this.courseRepository.findById(id)
+      if (!course) return null
+      
+      return {
+        ...course,
+        duration: this.formatDuration(course.duration as number)
+      }
     } catch (error) {
       logger.error('Error getting course by ID', error as Error, { id })
       throw error
@@ -27,7 +33,13 @@ export class CourseService {
 
   async getCourseByCode(code: string): Promise<CourseEntity | null> {
     try {
-      return await this.courseRepository.findByCode(code)
+      const course = await this.courseRepository.findByCode(code)
+      if (!course) return null
+      
+      return {
+        ...course,
+        duration: this.formatDuration(course.duration as number)
+      }
     } catch (error) {
       logger.error('Error getting course by code', error as Error, { code })
       throw error
@@ -36,7 +48,13 @@ export class CourseService {
 
   async getCourseWithDetails(id: string): Promise<CourseWithDetails | null> {
     try {
-      return await this.courseRepository.findByIdWithDetails(id)
+      const course = await this.courseRepository.findByIdWithDetails(id)
+      if (!course) return null
+      
+      return {
+        ...course,
+        duration: this.formatDuration(course.duration as number)
+      }
     } catch (error) {
       logger.error('Error getting course with details', error as Error, { id })
       throw error
@@ -45,10 +63,34 @@ export class CourseService {
 
   async getAllCourses(limit = 10, offset = 0, isActive = true): Promise<CourseEntity[]> {
     try {
-      return await this.courseRepository.findAll(limit, offset, isActive)
+      const courses = await this.courseRepository.findAll(limit, offset, isActive)
+      // Format duration to string format (e.g., "8h")
+      return courses.map(course => ({
+        ...course,
+        duration: this.formatDuration(course.duration)
+      }))
     } catch (error) {
       logger.error('Error getting all courses', error as Error, { limit, offset, isActive })
       throw error
+    }
+  }
+
+  private formatDuration(duration: number | string): string {
+    // Nếu đã là string format rồi thì return luôn
+    if (typeof duration === 'string') {
+      return duration;
+    }
+    
+    // Nếu là number thì format thành string
+    const hours = Math.floor(duration / 60);
+    const remainingMinutes = duration % 60;
+    
+    if (hours > 0 && remainingMinutes > 0) {
+      return `${hours}h ${remainingMinutes}m`;
+    } else if (hours > 0) {
+      return `${hours}h`;
+    } else {
+      return `${remainingMinutes}m`;
     }
   }
 

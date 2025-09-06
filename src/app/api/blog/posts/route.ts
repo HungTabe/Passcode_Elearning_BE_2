@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
       where.tags = { has: tag }
     }
 
-    const [posts, total] = await Promise.all([
+    const [rawPosts, total] = await Promise.all([
       prisma.blogPost.findMany({
         where,
         include: {
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
             select: {
               id: true,
               name: true,
-              email: true
+              avatarUrl: true,
             }
           },
           _count: {
@@ -42,6 +42,26 @@ export async function GET(request: NextRequest) {
       }),
       prisma.blogPost.count({ where })
     ])
+
+    const posts = rawPosts.map((p) => ({
+      id: p.id,
+      title: p.title,
+      excerpt: p.excerpt,
+      content: p.content,
+      author: {
+        name: p.author?.name ?? 'Unknown',
+        avatar: p.author?.avatarUrl ?? undefined,
+      },
+      category: p.category,
+      tags: p.tags,
+      publishedAt: p.publishedAt?.toISOString().slice(0, 10) ?? null,
+      readTime: p.readTime ? `${p.readTime} min read` : undefined,
+      image: p.featuredImage ?? undefined,
+      featured: p.featured,
+      views: p.views,
+      commentsCount: p._count?.comments ?? 0,
+      likes: (p as { likes?: number }).likes ?? 0,
+    }))
 
     return NextResponse.json({
       posts,
