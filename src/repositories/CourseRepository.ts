@@ -7,7 +7,6 @@ import {
   CreateEnrollmentRequest,
   EnrollmentEntity,
   CourseDetailResponse,
-  CurriculumSectionEntity,
   LessonEntity,
   LessonType
 } from '@/types/Course'
@@ -66,6 +65,9 @@ export class CourseRepository {
       // Map lessons to include default type for backward compatibility
       const mappedLessons: LessonEntity[] = course.lessons.map(lesson => ({
         ...lesson,
+        // Defaults for fields possibly missing in current Prisma client typings
+        description: (lesson as unknown as { description?: string | null }).description ?? undefined,
+        notes: (lesson as unknown as { notes?: string[] | null }).notes ?? [],
         type: LessonType.VIDEO // Temporary until Prisma client is regenerated
       }))
       

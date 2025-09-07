@@ -103,11 +103,13 @@ export interface LessonEntity {
   courseId: string
   curriculumSectionId?: string | null
   title: string
+  description?: string
   content: string
   videoUrl: string
   duration: number
   order: number
   type: LessonType
+  notes: string[]
   createdAt: Date
   updatedAt: Date
 }
@@ -115,10 +117,42 @@ export interface LessonEntity {
 export interface CreateLessonRequest {
   courseId: string
   title: string
+  description?: string
   content: string
   videoUrl: string
   duration: number
   order: number
+}
+
+export interface LessonResourceEntity {
+  id: string
+  lessonId: string
+  title: string
+  type: string
+  sizeText?: string
+  url: string
+  order: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+// API shape for GET /api/lessons/[id]
+export interface LessonDataResponse {
+  courseId: string
+  courseTitle: string
+  sectionTitle?: string
+  lessonId: string
+  title: string
+  description?: string
+  duration: string
+  videoUrl: string
+  index: number
+  totalLessons: number
+  prevLessonId?: string
+  nextLessonId?: string
+  resources: Array<{ id: string; title: string; type: string; size: string | undefined; url: string }>
+  notes: string[]
+  progressPercent: number
 }
 
 export interface EnrollmentEntity {

@@ -96,21 +96,42 @@ model Lesson {
   courseId          String
   curriculumSectionId String?
   title             String
+  description       String?
   content           String   @db.Text
   videoUrl          String
   duration          Int      // in minutes
   order             Int
   type              LessonType @default(VIDEO)
+  notes             String[]
   
   // Relations
   course            Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   curriculumSection CurriculumSection? @relation(fields: [curriculumSectionId], references: [id], onDelete: SetNull)
   progress          LessonProgress[]
+  resources         LessonResource[]
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("lessons")
+}
+
+model LessonResource {
+  id        String @id @default(cuid())
+  lessonId  String
+  title     String
+  type      String
+  sizeText  String?
+  url       String
+  order     Int     @default(0)
+
+  // Relations
+  lesson    Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("lesson_resources")
 }
 
 model Enrollment {
