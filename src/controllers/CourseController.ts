@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { CourseService } from '@/services/CourseService'
-import { CreateCourseRequest, UpdateCourseRequest, CreateEnrollmentRequest, CourseEntity } from '@/types/Course'
+import { CreateCourseRequest, UpdateCourseRequest, CreateEnrollmentRequest, CourseEntity, CourseDetailResponse } from '@/types/Course'
 import { ApiResponse, SuccessResponse, ErrorResponse, PaginatedResponse } from '@/types/ApiResponse'
 import { logger } from '@/lib/logger'
 import { requireAuth, requireAdmin } from '@/lib/auth'
@@ -103,6 +103,38 @@ export class CourseController {
       logger.error('Get course with details controller error', error as Error)
       
       const errorMessage = error instanceof Error ? error.message : 'Failed to get course details'
+      const response: ErrorResponse = {
+        success: false,
+        error: errorMessage,
+        statusCode: 500
+      }
+
+      return NextResponse.json(response, { status: 500 })
+    }
+  }
+
+  async getCourseDetail(request: NextRequest, { params }: { params: { id: string } }): Promise<NextResponse<ApiResponse>> {
+    try {
+      const course = await this.courseService.getCourseDetail(params.id)
+      
+      if (!course) {
+        return NextResponse.json(
+          { success: false, error: 'Course not found' } as ErrorResponse,
+          { status: 404 }
+        )
+      }
+
+      const response: SuccessResponse<CourseDetailResponse> = {
+        success: true,
+        data: course,
+        message: 'Course detail retrieved successfully'
+      }
+
+      return NextResponse.json(response)
+    } catch (error) {
+      logger.error('Get course detail controller error', error as Error)
+      
+      const errorMessage = error instanceof Error ? error.message : 'Failed to get course detail'
       const response: ErrorResponse = {
         success: false,
         error: errorMessage,

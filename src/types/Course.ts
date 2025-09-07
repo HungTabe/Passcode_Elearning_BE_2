@@ -1,5 +1,13 @@
 import { Level } from '@prisma/client'
 
+// Temporary enum until Prisma client is regenerated
+export enum LessonType {
+  VIDEO = 'VIDEO',
+  TEXT = 'TEXT',
+  QUIZ = 'QUIZ',
+  ASSIGNMENT = 'ASSIGNMENT'
+}
+
 export interface CourseEntity {
   id: string
   code: string
@@ -20,6 +28,7 @@ export interface CourseEntity {
   lessons: number
   category: string
   price: number
+  originalPrice?: number
   image: string
   previewUrl: string
   createdAt: Date
@@ -45,6 +54,7 @@ export interface CreateCourseRequest {
   lessons?: number
   category: string
   price: number
+  originalPrice?: number
   image: string
   previewUrl: string
 }
@@ -68,6 +78,7 @@ export interface UpdateCourseRequest {
   lessons?: number
   category?: string
   price?: number
+  originalPrice?: number
   image?: string
   previewUrl?: string
 }
@@ -77,14 +88,26 @@ export interface CourseWithDetails extends Omit<CourseEntity, 'lessons'> {
   enrollmentsCount: number
 }
 
+export interface CurriculumSectionEntity {
+  id: string
+  courseId: string
+  title: string
+  order: number
+  lessons: LessonEntity[]
+  createdAt: Date
+  updatedAt: Date
+}
+
 export interface LessonEntity {
   id: string
   courseId: string
+  curriculumSectionId?: string | null
   title: string
   content: string
   videoUrl: string
   duration: number
   order: number
+  type: LessonType
   createdAt: Date
   updatedAt: Date
 }
@@ -108,4 +131,37 @@ export interface EnrollmentEntity {
 export interface CreateEnrollmentRequest {
   userId: string
   courseId: string
+}
+
+// Interface for detailed course response matching mock data structure
+export interface CourseDetailResponse {
+  id: string
+  title: string
+  instructor: string
+  rating: number
+  students: number
+  duration: string
+  lessons: number
+  level: string
+  description: string
+  price: number
+  originalPrice?: number
+  image: string
+  videoUrl: string
+  curriculum: CurriculumSection[]
+  requirements: string[]
+  outcomes: string[]
+}
+
+export interface CurriculumSection {
+  id: string
+  title: string
+  lessons: LessonDetail[]
+}
+
+export interface LessonDetail {
+  id: string
+  title: string
+  duration: string
+  type: string
 }

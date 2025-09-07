@@ -5,7 +5,8 @@ import {
   UpdateCourseRequest, 
   CourseWithDetails,
   CreateEnrollmentRequest,
-  EnrollmentEntity
+  EnrollmentEntity,
+  CourseDetailResponse
 } from '@/types/Course'
 import { logger } from '@/lib/logger'
 
@@ -57,6 +58,18 @@ export class CourseService {
       }
     } catch (error) {
       logger.error('Error getting course with details', error as Error, { id })
+      throw error
+    }
+  }
+
+  async getCourseDetail(id: string): Promise<CourseDetailResponse | null> {
+    try {
+      const course = await this.courseRepository.findByIdWithCurriculum(id)
+      if (!course) return null
+      
+      return course
+    } catch (error) {
+      logger.error('Error getting course detail', error as Error, { id })
       throw error
     }
   }

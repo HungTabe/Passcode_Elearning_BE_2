@@ -62,7 +62,7 @@ export async function GET(
       image: post.featuredImage ?? undefined,
       featured: post.featured,
       views: post.views,
-      likes: (post as { likes?: number }).likes ?? 0,
+      likes: post.likes ?? 0,
       comments: post.comments?.length ?? 0,
     }
 

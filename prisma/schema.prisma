@@ -54,18 +54,20 @@ model Course {
   isActive     Boolean  @default(true)
   
   // Enhanced course information
-  instructor  String
-  rating      Float    @default(0.0)
-  students    Int      @default(0)
-  lessonsCount Int     @default(0)
-  category    String
-  price       Float    @default(0.0)
-  image       String
-  previewUrl  String
+  instructor    String
+  rating        Float    @default(0.0)
+  students      Int      @default(0)
+  lessonsCount  Int      @default(0)
+  category      String
+  price         Float    @default(0.0)
+  originalPrice Float?   // For discount pricing
+  image         String
+  previewUrl    String
   
   // Relations
-  lessons     Lesson[]
-  enrollments Enrollment[]
+  lessons       Lesson[]
+  enrollments   Enrollment[]
+  curriculum    CurriculumSection[]
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -73,18 +75,37 @@ model Course {
   @@map("courses")
 }
 
-model Lesson {
+model CurriculumSection {
   id        String   @id @default(cuid())
   courseId  String
   title     String
-  content   String   @db.Text
-  videoUrl  String
-  duration  Int      // in minutes
   order     Int
   
   // Relations
   course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  progress  LessonProgress[]
+  lessons   Lesson[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("curriculum_sections")
+}
+
+model Lesson {
+  id                String   @id @default(cuid())
+  courseId          String
+  curriculumSectionId String?
+  title             String
+  content           String   @db.Text
+  videoUrl          String
+  duration          Int      // in minutes
+  order             Int
+  type              LessonType @default(VIDEO)
+  
+  // Relations
+  course            Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  curriculumSection CurriculumSection? @relation(fields: [curriculumSectionId], references: [id], onDelete: SetNull)
+  progress          LessonProgress[]
   
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -173,4 +194,11 @@ enum Level {
   BEGINNER
   INTERMEDIATE
   ADVANCED
+}
+
+enum LessonType {
+  VIDEO
+  TEXT
+  QUIZ
+  ASSIGNMENT
 }
