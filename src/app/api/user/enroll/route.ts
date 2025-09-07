@@ -4,7 +4,7 @@ import { requireAuth } from '@/lib/auth'
 
 export async function POST(request: NextRequest) {
   try {
-    const user = await requireAuth()
+    const user = await requireAuth(request)
     const { courseId } = await request.json()
     
     if (!courseId) {
@@ -73,9 +73,9 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const user = await requireAuth()
+    const user = await requireAuth(request)
     
     const enrollments = await prisma.enrollment.findMany({
       where: { userId: user.id },
