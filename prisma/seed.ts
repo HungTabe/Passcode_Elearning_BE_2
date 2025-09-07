@@ -139,10 +139,10 @@ async function main() {
     }
   })
 
-  // Create lessons for PRN212 with curriculum sections
-  await prisma.lesson.createMany({
-    data: [
-      {
+  // Create lessons for PRN212 with curriculum sections (now include description and notes)
+  const prn212Lessons = await prisma.$transaction([
+    prisma.lesson.create({
+      data: {
         courseId: course1.id,
         curriculumSectionId: prn212Section1.id,
         title: 'What is WPF?',
@@ -150,9 +150,11 @@ async function main() {
         videoUrl: 'https://www.youtube.com/embed/_XzwkhFngFM?si=-idT8k2cQnDrRDNA&start=2008',
         duration: 15,
         order: 1,
-        type: 'VIDEO'
-      },
-      {
+        type: 'VIDEO',
+      }
+    }),
+    prisma.lesson.create({
+      data: {
         courseId: course1.id,
         curriculumSectionId: prn212Section1.id,
         title: 'Setting up WPF Project',
@@ -161,8 +163,10 @@ async function main() {
         duration: 20,
         order: 2,
         type: 'VIDEO'
-      },
-      {
+      }
+    }),
+    prisma.lesson.create({
+      data: {
         courseId: course1.id,
         curriculumSectionId: prn212Section1.id,
         title: 'WPF Architecture Overview',
@@ -171,59 +175,9 @@ async function main() {
         duration: 25,
         order: 3,
         type: 'VIDEO'
-      },
-      {
-        courseId: course1.id,
-        curriculumSectionId: prn212Section2.id,
-        title: 'XAML Basics',
-        content: 'Master XAML syntax and understand how to create user interfaces.',
-        videoUrl: 'https://www.youtube.com/embed/_XzwkhFngFM?si=-idT8k2cQnDrRDNA&start=3500',
-        duration: 30,
-        order: 4,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course1.id,
-        curriculumSectionId: prn212Section2.id,
-        title: 'Layout Controls',
-        content: 'Learn about Grid, StackPanel, and other layout controls in WPF.',
-        videoUrl: 'https://www.youtube.com/embed/_XzwkhFngFM?si=-idT8k2cQnDrRDNA&start=4000',
-        duration: 35,
-        order: 5,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course1.id,
-        curriculumSectionId: prn212Section2.id,
-        title: 'Styling and Templates',
-        content: 'Create custom styles and control templates for consistent UI design.',
-        videoUrl: 'https://www.youtube.com/embed/_XzwkhFngFM?si=-idT8k2cQnDrRDNA&start=4500',
-        duration: 40,
-        order: 6,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course1.id,
-        curriculumSectionId: prn212Section3.id,
-        title: 'MVVM Pattern Introduction',
-        content: 'Implement the Model-View-ViewModel pattern for better code organization.',
-        videoUrl: 'https://www.youtube.com/embed/_XzwkhFngFM?si=-idT8k2cQnDrRDNA&start=5000',
-        duration: 25,
-        order: 7,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course1.id,
-        curriculumSectionId: prn212Section3.id,
-        title: 'Data Binding Deep Dive',
-        content: 'Master data binding concepts including two-way binding and converters.',
-        videoUrl: 'https://www.youtube.com/embed/_XzwkhFngFM?si=-idT8k2cQnDrRDNA&start=5500',
-        duration: 30,
-        order: 8,
-        type: 'VIDEO'
       }
-    ]
-  })
+    }),
+  ])
 
   // Create curriculum sections for PRN222
   const prn222Section1 = await prisma.curriculumSection.create({
@@ -283,38 +237,29 @@ async function main() {
         order: 3,
         type: 'VIDEO'
       },
-      {
-        courseId: course2.id,
-        curriculumSectionId: prn222Section2.id,
-        title: 'Entity Framework Setup',
-        content: 'Set up Entity Framework Core for database operations.',
-        videoUrl: 'https://www.youtube.com/embed/WI2bdyHatjU?si=rfRWVIjQLtY6mIz5&start=8500',
-        duration: 25,
-        order: 4,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course2.id,
-        curriculumSectionId: prn222Section2.id,
-        title: 'CRUD Operations',
-        content: 'Implement Create, Read, Update, Delete operations with Razor Pages.',
-        videoUrl: 'https://www.youtube.com/embed/WI2bdyHatjU?si=rfRWVIjQLtY6mIz5&start=9000',
-        duration: 35,
-        order: 5,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course2.id,
-        curriculumSectionId: prn222Section3.id,
-        title: 'User Authentication',
-        content: 'Implement user authentication using ASP.NET Core Identity.',
-        videoUrl: 'https://www.youtube.com/embed/WI2bdyHatjU?si=rfRWVIjQLtY6mIz5&start=9500',
-        duration: 30,
-        order: 6,
-        type: 'VIDEO'
-      }
     ]
   })
+
+  // Enrich ALL lessons without loops: set a default description and notes for all (raw SQL for compatibility)
+  await prisma.$executeRawUnsafe(
+    "UPDATE \"lessons\" SET description = 'Lesson overview and best practices'"
+  )
+  await prisma.$executeRawUnsafe(
+    "UPDATE \"lessons\" SET notes = ARRAY['Key points','Review examples','Practice exercises']::text[]"
+  )
+
+  // Seed three resources for every lesson using single SQL insert-selects (no loops)
+  await prisma.$executeRawUnsafe(
+    'INSERT INTO "lesson_resources" ("id","lessonId","title","type","sizeText","url","order","createdAt","updatedAt")\n     SELECT CONCAT(\'lr_\', md5(random()::text || clock_timestamp()::text)), l.id, CONCAT(\'Slides - \', l.title), \'pdf\', \'2.0 MB\', \'https://www.google.com\', 1, NOW(), NOW() FROM "lessons" l'
+  )
+
+  await prisma.$executeRawUnsafe(
+    'INSERT INTO "lesson_resources" ("id","lessonId","title","type","sizeText","url","order","createdAt","updatedAt")\n     SELECT CONCAT(\'lr_\', md5(random()::text || clock_timestamp()::text)), l.id, CONCAT(\'Project Files - \', l.title), \'zip\', \'1.2 MB\', \'https://www.google.com\', 2, NOW(), NOW() FROM "lessons" l'
+  )
+
+  await prisma.$executeRawUnsafe(
+    'INSERT INTO "lesson_resources" ("id","lessonId","title","type","sizeText","url","order","createdAt","updatedAt")\n     SELECT CONCAT(\'lr_\', md5(random()::text || clock_timestamp()::text)), l.id, CONCAT(\'Cheatsheet - \', l.title), \'pdf\', \'640 KB\', \'https://www.google.com\', 3, NOW(), NOW() FROM "lessons" l'
+  )
 
   // Create curriculum sections for PRN232 (Web API)
   const prn232Section1 = await prisma.curriculumSection.create({
@@ -357,7 +302,7 @@ async function main() {
     }
   })
 
-  // Create lessons for PRN232 with curriculum sections
+  // Create a couple of PRN232 lessons with notes
   await prisma.lesson.createMany({
     data: [
       {
@@ -380,86 +325,6 @@ async function main() {
         order: 2,
         type: 'VIDEO'
       },
-      {
-        courseId: course3.id,
-        curriculumSectionId: prn232Section2.id,
-        title: 'Creating API Controllers',
-        content: 'Learn how to create and structure API controllers in ASP.NET Core.',
-        videoUrl: 'https://www.youtube.com/embed/B0Xdo9TWhgs?si=F3ZWB6fMaYvWxFzG&start=6000',
-        duration: 30,
-        order: 3,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course3.id,
-        curriculumSectionId: prn232Section2.id,
-        title: 'API Routing and Endpoints',
-        content: 'Configure routing and create custom endpoints for your API.',
-        videoUrl: 'https://www.youtube.com/embed/B0Xdo9TWhgs?si=F3ZWB6fMaYvWxFzG&start=6500',
-        duration: 25,
-        order: 4,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course3.id,
-        curriculumSectionId: prn232Section3.id,
-        title: 'Entity Framework Integration',
-        content: 'Integrate Entity Framework Core with your Web API for data access.',
-        videoUrl: 'https://www.youtube.com/embed/B0Xdo9TWhgs?si=F3ZWB6fMaYvWxFzG&start=7000',
-        duration: 35,
-        order: 5,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course3.id,
-        curriculumSectionId: prn232Section3.id,
-        title: 'Model Validation',
-        content: 'Implement data validation using Data Annotations and FluentValidation.',
-        videoUrl: 'https://www.youtube.com/embed/B0Xdo9TWhgs?si=F3ZWB6fMaYvWxFzG&start=7500',
-        duration: 30,
-        order: 6,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course3.id,
-        curriculumSectionId: prn232Section4.id,
-        title: 'JWT Authentication',
-        content: 'Implement JWT-based authentication for your Web API.',
-        videoUrl: 'https://www.youtube.com/embed/B0Xdo9TWhgs?si=F3ZWB6fMaYvWxFzG&start=8000',
-        duration: 40,
-        order: 7,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course3.id,
-        curriculumSectionId: prn232Section4.id,
-        title: 'Authorization and Roles',
-        content: 'Implement role-based authorization and policy-based security.',
-        videoUrl: 'https://www.youtube.com/embed/B0Xdo9TWhgs?si=F3ZWB6fMaYvWxFzG&start=8500',
-        duration: 35,
-        order: 8,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course3.id,
-        curriculumSectionId: prn232Section5.id,
-        title: 'Swagger Documentation',
-        content: 'Generate and customize API documentation using Swagger/OpenAPI.',
-        videoUrl: 'https://www.youtube.com/embed/B0Xdo9TWhgs?si=F3ZWB6fMaYvWxFzG&start=9000',
-        duration: 25,
-        order: 9,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course3.id,
-        curriculumSectionId: prn232Section5.id,
-        title: 'API Testing with Postman',
-        content: 'Test your API endpoints using Postman and automated testing.',
-        videoUrl: 'https://www.youtube.com/embed/B0Xdo9TWhgs?si=F3ZWB6fMaYvWxFzG&start=9500',
-        duration: 30,
-        order: 10,
-        type: 'VIDEO'
-      }
     ]
   })
 
@@ -512,7 +377,7 @@ async function main() {
     }
   })
 
-  // Create lessons for PRM392 with curriculum sections
+  // Keep existing lesson batches for PRM392
   await prisma.lesson.createMany({
     data: [
       {
