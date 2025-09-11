@@ -38,8 +38,8 @@ async function main() {
       students: 245,
       lessonsCount: 8,
       category: 'Desktop Development',
-      price: 79.99,
-      originalPrice: 99.99,
+      price: 400000,
+      originalPrice: 500000,
       image: 'https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/WPF_4_1ff72da2f7.png',
       previewUrl: 'https://www.youtube.com/embed/_XzwkhFngFM?si=-idT8k2cQnDrRDNA&start=2008'
     }
@@ -61,8 +61,8 @@ async function main() {
       students: 189,
       lessonsCount: 6,
       category: 'Web Development',
-      price: 69.99,
-      originalPrice: 89.99,
+      price: 400000,
+      originalPrice: 500000,
       image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80',
       previewUrl: 'https://www.youtube.com/embed/WI2bdyHatjU?si=rfRWVIjQLtY6mIz5&start=6936'
     }
@@ -84,8 +84,8 @@ async function main() {
       students: 312,
       lessonsCount: 10,
       category: 'API Development',
-      price: 89.99,
-      originalPrice: 119.99,
+      price: 400000,
+      originalPrice: 500000,
       image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80',
       previewUrl: 'https://www.youtube.com/embed/B0Xdo9TWhgs?si=F3ZWB6fMaYvWxFzG&start=4970'
     }
@@ -94,21 +94,21 @@ async function main() {
   const course4 = await prisma.course.create({
     data: {
       code: 'PRM392',
-      name: 'Java Android App Development',
+      name: 'Java/Kotlin Android App Development',
       title: 'Complete Android App Development with Java',
-      description: 'Develop native Android applications using Java in Android Studio',
+      description: 'Develop native Android applications using Java/Kotlin in Android Studio',
       videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=5731',
-      requirements: ['Java programming', 'Android Studio', 'XML basics'],
-      outcomes: ['Build Android apps', 'UI/UX design', 'Database integration', 'App deployment'],
+      requirements: ['Java programming', 'Android Studio', 'XML basics', 'Kotlin programming'],
+      outcomes: ['Build Android apps', 'UI/UX design', 'Database integration', 'App deployment', 'Setup SupabaseDB & LocalDB', 'Payment Portal', 'Fundamental Concept'],
       duration: 150,
       level: 'ADVANCED',
-      instructor: 'David Kim',
+      instructor: 'Quoc Hoang',
       rating: 4.6,
       students: 480,
-      lessonsCount: 15,
+      lessonsCount: 25,
       category: 'Mobile Development',
-      price: 99.99,
-      originalPrice: 149.99,
+      price: 400000,
+      originalPrice: 500000,
       image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80',
       previewUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=5731'
     }
@@ -329,209 +329,269 @@ async function main() {
   })
 
   // Create curriculum sections for PRM392 (Android Development)
-  const prm392Section1 = await prisma.curriculumSection.create({
-    data: {
+const prm392Section1 = await prisma.curriculumSection.create({
+  data: {
+    courseId: course4.id,
+    title: 'Introduction to Android Development',
+    order: 1,
+  },
+});
+const prm392Section2 = await prisma.curriculumSection.create({
+  data: {
+    courseId: course4.id,
+    title: 'Kotlin Fundamentals',
+    order: 2,
+  },
+});
+const prm392Section3 = await prisma.curriculumSection.create({
+  data: {
+    courseId: course4.id,
+    title: 'UI Design with XML',
+    order: 3,
+  },
+});
+const prm392Section4 = await prisma.curriculumSection.create({
+  data: {
+    courseId: course4.id,
+    title: 'App Components: Activities and Intents',
+    order: 4,
+  },
+});
+const prm392Section5 = await prisma.curriculumSection.create({
+  data: {
+    courseId: course4.id,
+    title: 'App Components: Services, Broadcast Receivers, and Content Providers',
+    order: 5,
+  },
+});
+const prm392Section6 = await prisma.curriculumSection.create({
+  data: {
+    courseId: course4.id,
+    title: 'Data Storage',
+    order: 6,
+  },
+});
+const prm392Section7 = await prisma.curriculumSection.create({
+  data: {
+    courseId: course4.id,
+    title: 'Version Control with Git',
+    order: 7,
+  },
+});
+const prm392Section8 = await prisma.curriculumSection.create({
+  data: {
+    courseId: course4.id,
+    title: 'Networking',
+    order: 8,
+  },
+});
+const prm392Section9 = await prisma.curriculumSection.create({
+  data: {
+    courseId: course4.id,
+    title: 'Asynchronism with Coroutines',
+    order: 9,
+  },
+});
+const prm392Section10 = await prisma.curriculumSection.create({
+  data: {
+    courseId: course4.id,
+    title: 'UI Design with Jetpack Compose',
+    order: 10,
+  },
+});
+const prm392Section11 = await prisma.curriculumSection.create({
+  data: {
+    courseId: course4.id,
+    title: 'App Architecture and Design Patterns',
+    order: 11,
+  },
+});
+const prm392Section12 = await prisma.curriculumSection.create({
+  data: {
+    courseId: course4.id,
+    title: 'Testing and Debugging',
+    order: 12,
+  },
+});
+const prm392Section13 = await prisma.curriculumSection.create({
+  data: {
+    courseId: course4.id,
+    title: 'Common Services: Firebase',
+    order: 13,
+  },
+});
+const prm392Section14 = await prisma.curriculumSection.create({
+  data: {
+    courseId: course4.id,
+    title: 'App Distribution',
+    order: 14,
+  },
+});
+// Keep existing lesson batches for PRM392
+await prisma.lesson.createMany({
+  data: [
+    {
       courseId: course4.id,
-      title: 'Android Development Setup',
-      order: 1
-    }
-  })
-
-  const prm392Section2 = await prisma.curriculumSection.create({
-    data: {
+      curriculumSectionId: prm392Section1.id,
+      title: 'Introduction to Android Development',
+      content: 'Overview of Android, its history, and ecosystem. Setting up the development environment (Android Studio, SDK).',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=5731',
+      duration: 25,
+      order: 1,
+      type: 'VIDEO',
+    },
+    {
       courseId: course4.id,
-      title: 'UI/UX Design',
-      order: 2
-    }
-  })
-
-  const prm392Section3 = await prisma.curriculumSection.create({
-    data: {
+      curriculumSectionId: prm392Section2.id,
+      title: 'Kotlin Fundamentals: Variables, Data Types, and Operators',
+      content: 'Learn about Variables, Data Types, and Operators.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=6200',
+      duration: 30,
+      order: 1,
+      type: 'VIDEO',
+    },
+    {
       courseId: course4.id,
-      title: 'Activity Lifecycle and Navigation',
-      order: 3
-    }
-  })
-
-  const prm392Section4 = await prisma.curriculumSection.create({
-    data: {
+      curriculumSectionId: prm392Section2.id,
+      title: 'Kotlin Fundamentals: Control Flow',
+      content: 'Learn about Control flow (if/else, loops).',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=6700',
+      duration: 20,
+      order: 2,
+      type: 'VIDEO',
+    },
+    {
       courseId: course4.id,
-      title: 'Data Storage and Management',
-      order: 4
-    }
-  })
-
-  const prm392Section5 = await prisma.curriculumSection.create({
-    data: {
+      curriculumSectionId: prm392Section2.id,
+      title: 'Kotlin Fundamentals: Functions and Classes',
+      content: 'Learn about Functions and Classes.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=7200',
+      duration: 35,
+      order: 3,
+      type: 'VIDEO',
+    },
+    {
       courseId: course4.id,
-      title: 'Networking and APIs',
-      order: 5
-    }
-  })
-
-  const prm392Section6 = await prisma.curriculumSection.create({
-    data: {
+      curriculumSectionId: prm392Section3.id,
+      title: 'UI Design with XML Layouts',
+      content: 'Learn about Creating user interfaces using XML layout files.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=7700',
+      duration: 30,
+      order: 1,
+      type: 'VIDEO',
+    },
+    {
       courseId: course4.id,
-      title: 'App Deployment',
-      order: 6
-    }
-  })
-
-  // Keep existing lesson batches for PRM392
-  await prisma.lesson.createMany({
-    data: [
-      {
-        courseId: course4.id,
-        curriculumSectionId: prm392Section1.id,
-        title: 'Android Studio Setup',
-        content: 'Install and configure Android Studio development environment.',
-        videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=5731',
-        duration: 25,
-        order: 1,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course4.id,
-        curriculumSectionId: prm392Section1.id,
-        title: 'Creating Your First App',
-        content: 'Create and run your first Android application.',
-        videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=6200',
-        duration: 30,
-        order: 2,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course4.id,
-        curriculumSectionId: prm392Section1.id,
-        title: 'Project Structure Overview',
-        content: 'Understand Android project structure and key components.',
-        videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=6700',
-        duration: 20,
-        order: 3,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course4.id,
-        curriculumSectionId: prm392Section2.id,
-        title: 'XML Layouts',
-        content: 'Create user interfaces using XML layout files.',
-        videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=7200',
-        duration: 35,
-        order: 4,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course4.id,
-        curriculumSectionId: prm392Section2.id,
-        title: 'Views and ViewGroups',
-        content: 'Learn about different views and view groups in Android.',
-        videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=7700',
-        duration: 30,
-        order: 5,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course4.id,
-        curriculumSectionId: prm392Section2.id,
-        title: 'Material Design',
-        content: 'Implement Material Design principles in your app.',
-        videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=8200',
-        duration: 40,
-        order: 6,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course4.id,
-        curriculumSectionId: prm392Section3.id,
-        title: 'Activity Lifecycle',
-        content: 'Understand the Android activity lifecycle and its methods.',
-        videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=8700',
-        duration: 35,
-        order: 7,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course4.id,
-        curriculumSectionId: prm392Section3.id,
-        title: 'Intent and Navigation',
-        content: 'Use intents for navigation between activities.',
-        videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=9200',
-        duration: 30,
-        order: 8,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course4.id,
-        curriculumSectionId: prm392Section3.id,
-        title: 'Fragments',
-        content: 'Create and manage fragments for flexible UI design.',
-        videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=9700',
-        duration: 40,
-        order: 9,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course4.id,
-        curriculumSectionId: prm392Section4.id,
-        title: 'SharedPreferences',
-        content: 'Store simple data using SharedPreferences.',
-        videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=10200',
-        duration: 25,
-        order: 10,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course4.id,
-        curriculumSectionId: prm392Section4.id,
-        title: 'SQLite Database',
-        content: 'Implement local database using SQLite.',
-        videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=10700',
-        duration: 45,
-        order: 11,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course4.id,
-        curriculumSectionId: prm392Section4.id,
-        title: 'Room Database',
-        content: 'Use Room persistence library for database operations.',
-        videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=11200',
-        duration: 50,
-        order: 12,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course4.id,
-        curriculumSectionId: prm392Section5.id,
-        title: 'HTTP Requests',
-        content: 'Make HTTP requests using Retrofit and OkHttp.',
-        videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=11700',
-        duration: 40,
-        order: 13,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course4.id,
-        curriculumSectionId: prm392Section5.id,
-        title: 'JSON Parsing',
-        content: 'Parse JSON data using Gson and other libraries.',
-        videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=12200',
-        duration: 30,
-        order: 14,
-        type: 'VIDEO'
-      },
-      {
-        courseId: course4.id,
-        curriculumSectionId: prm392Section6.id,
-        title: 'App Signing and Release',
-        content: 'Sign your app and prepare for release on Google Play Store.',
-        videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=12700',
-        duration: 35,
-        order: 15,
-        type: 'VIDEO'
-      }
-    ]
-  })
+      curriculumSectionId: prm392Section3.id,
+      title: 'Views and ViewGroups',
+      content: 'Learn about different views and view groups in Android.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=8200',
+      duration: 40,
+      order: 2,
+      type: 'VIDEO',
+    },
+    {
+      courseId: course4.id,
+      curriculumSectionId: prm392Section3.id,
+      title: 'Material Design',
+      content: 'Implement Material Design principles in your app.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=8700',
+      duration: 35,
+      order: 3,
+      type: 'VIDEO',
+    },
+    {
+      courseId: course4.id,
+      curriculumSectionId: prm392Section4.id,
+      title: 'Activity Lifecycle',
+      content: 'Understand the Android activity lifecycle and its methods.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=9200',
+      duration: 30,
+      order: 1,
+      type: 'VIDEO',
+    },
+    {
+      courseId: course4.id,
+      curriculumSectionId: prm392Section4.id,
+      title: 'Intent and Navigation',
+      content: 'Use intents for navigation between activities.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=9700',
+      duration: 40,
+      order: 2,
+      type: 'VIDEO',
+    },
+    {
+      courseId: course4.id,
+      curriculumSectionId: prm392Section4.id,
+      title: 'Fragments',
+      content: 'Create and manage fragments for flexible UI design.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=10200',
+      duration: 25,
+      order: 3,
+      type: 'VIDEO',
+    },
+    {
+      courseId: course4.id,
+      curriculumSectionId: prm392Section6.id,
+      title: 'SharedPreferences',
+      content: 'Store simple data using SharedPreferences.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=10700',
+      duration: 45,
+      order: 1,
+      type: 'VIDEO',
+    },
+    {
+      courseId: course4.id,
+      curriculumSectionId: prm392Section6.id,
+      title: 'SQLite Database',
+      content: 'Implement local database using SQLite.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=11200',
+      duration: 50,
+      order: 2,
+      type: 'VIDEO',
+    },
+    {
+      courseId: course4.id,
+      curriculumSectionId: prm392Section6.id,
+      title: 'Room Database',
+      content: 'Use Room persistence library for database operations.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=11700',
+      duration: 40,
+      order: 3,
+      type: 'VIDEO',
+    },
+    {
+      courseId: course4.id,
+      curriculumSectionId: prm392Section8.id,
+      title: 'HTTP Requests',
+      content: 'Make HTTP requests using Retrofit and OkHttp.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=12200',
+      duration: 30,
+      order: 1,
+      type: 'VIDEO',
+    },
+    {
+      courseId: course4.id,
+      curriculumSectionId: prm392Section8.id,
+      title: 'JSON Parsing',
+      content: 'Parse JSON data using Gson and other libraries.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=12700',
+      duration: 35,
+      order: 2,
+      type: 'VIDEO',
+    },
+    {
+      courseId: course4.id,
+      curriculumSectionId: prm392Section14.id,
+      title: 'App Signing and Release',
+      content: 'Sign your app and prepare for release on Google Play Store.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=12700',
+      duration: 35,
+      order: 1,
+      type: 'VIDEO',
+    },
+  ],
+});
 
   // Create sample blog posts
   await prisma.blogPost.createMany({
