@@ -328,271 +328,1232 @@ async function main() {
     ]
   })
 
-  // Create curriculum sections for PRM392 (Android Development)
-const prm392Section1 = await prisma.curriculumSection.create({
-  data: {
-    courseId: course4.id,
-    title: 'Introduction to Android Development',
-    order: 1,
-  },
-});
-const prm392Section2 = await prisma.curriculumSection.create({
-  data: {
-    courseId: course4.id,
-    title: 'Kotlin Fundamentals',
-    order: 2,
-  },
-});
-const prm392Section3 = await prisma.curriculumSection.create({
-  data: {
-    courseId: course4.id,
-    title: 'UI Design with XML',
-    order: 3,
-  },
-});
-const prm392Section4 = await prisma.curriculumSection.create({
-  data: {
-    courseId: course4.id,
-    title: 'App Components: Activities and Intents',
-    order: 4,
-  },
-});
-const prm392Section5 = await prisma.curriculumSection.create({
-  data: {
-    courseId: course4.id,
-    title: 'App Components: Services, Broadcast Receivers, and Content Providers',
-    order: 5,
-  },
-});
-const prm392Section6 = await prisma.curriculumSection.create({
-  data: {
-    courseId: course4.id,
-    title: 'Data Storage',
-    order: 6,
-  },
-});
-const prm392Section7 = await prisma.curriculumSection.create({
-  data: {
-    courseId: course4.id,
-    title: 'Version Control with Git',
-    order: 7,
-  },
-});
-const prm392Section8 = await prisma.curriculumSection.create({
-  data: {
-    courseId: course4.id,
-    title: 'Networking',
-    order: 8,
-  },
-});
-const prm392Section9 = await prisma.curriculumSection.create({
-  data: {
-    courseId: course4.id,
-    title: 'Asynchronism with Coroutines',
-    order: 9,
-  },
-});
-const prm392Section10 = await prisma.curriculumSection.create({
-  data: {
-    courseId: course4.id,
-    title: 'UI Design with Jetpack Compose',
-    order: 10,
-  },
-});
-const prm392Section11 = await prisma.curriculumSection.create({
-  data: {
-    courseId: course4.id,
-    title: 'App Architecture and Design Patterns',
-    order: 11,
-  },
-});
-const prm392Section12 = await prisma.curriculumSection.create({
-  data: {
-    courseId: course4.id,
-    title: 'Testing and Debugging',
-    order: 12,
-  },
-});
-const prm392Section13 = await prisma.curriculumSection.create({
-  data: {
-    courseId: course4.id,
-    title: 'Common Services: Firebase',
-    order: 13,
-  },
-});
-const prm392Section14 = await prisma.curriculumSection.create({
-  data: {
-    courseId: course4.id,
-    title: 'App Distribution',
-    order: 14,
-  },
-});
-// Keep existing lesson batches for PRM392
-await prisma.lesson.createMany({
-  data: [
-    {
+  // Create curriculum sections for PRM392 (Android Development) redesigned for 22 topics
+  const prm392S1 = await prisma.curriculumSection.create({
+    data: { courseId: course4.id, title: 'Android Basics', order: 1 }
+  })
+  const prm392S2 = await prisma.curriculumSection.create({
+    data: { courseId: course4.id, title: 'UI Components & Layout', order: 2 }
+  })
+  const prm392S3 = await prisma.curriculumSection.create({
+    data: { courseId: course4.id, title: 'Activities, Intents & Fragments', order: 3 }
+  })
+  const prm392S4 = await prisma.curriculumSection.create({
+    data: { courseId: course4.id, title: 'Lists, Media & Menus', order: 4 }
+  })
+  const prm392S5 = await prisma.curriculumSection.create({
+    data: { courseId: course4.id, title: 'Permissions & Notifications', order: 5 }
+  })
+  const prm392S6 = await prisma.curriculumSection.create({
+    data: { courseId: course4.id, title: 'Data & Content', order: 6 }
+  })
+  const prm392S7 = await prisma.curriculumSection.create({
+    data: { courseId: course4.id, title: 'Background & Concurrency', order: 7 }
+  })
+  const prm392S8 = await prisma.curriculumSection.create({
+    data: { courseId: course4.id, title: 'Location & Maps', order: 8 }
+  })
+  const prm392S9 = await prisma.curriculumSection.create({
+    data: { courseId: course4.id, title: 'Networking', order: 9 }
+  })
+  const prm392S10 = await prisma.curriculumSection.create({
+    data: { courseId: course4.id, title: 'Architecture', order: 10 }
+  })
+
+  // Seed 22 lessons mapped to the provided topics (per-object, no loops)
+  const androidOverview = await prisma.lesson.create({
+    data: {
       courseId: course4.id,
-      curriculumSectionId: prm392Section1.id,
-      title: 'Introduction to Android Development',
-      content: 'Overview of Android, its history, and ecosystem. Setting up the development environment (Android Studio, SDK).',
+      curriculumSectionId: prm392S1.id,
+      title: 'Android Overview',
+      content: 'Overview of Android platform, history, ecosystem, and development setup.',
       videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=5731',
-      duration: 25,
+      duration: 20,
       order: 1,
       type: 'VIDEO',
-    },
-    {
+    }
+  })
+  const androidStructure = await prisma.lesson.create({
+    data: {
       courseId: course4.id,
-      curriculumSectionId: prm392Section2.id,
-      title: 'Kotlin Fundamentals: Variables, Data Types, and Operators',
-      content: 'Learn about Variables, Data Types, and Operators.',
-      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=6200',
-      duration: 30,
-      order: 1,
-      type: 'VIDEO',
-    },
-    {
-      courseId: course4.id,
-      curriculumSectionId: prm392Section2.id,
-      title: 'Kotlin Fundamentals: Control Flow',
-      content: 'Learn about Control flow (if/else, loops).',
-      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=6700',
+      curriculumSectionId: prm392S1.id,
+      title: 'Android Structure',
+      content: 'Android system architecture: Linux kernel, HAL, libraries, runtime, framework, apps.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=5900',
       duration: 20,
       order: 2,
       type: 'VIDEO',
-    },
-    {
+    }
+  })
+  const simpleWidgets = await prisma.lesson.create({
+    data: {
       courseId: course4.id,
-      curriculumSectionId: prm392Section2.id,
-      title: 'Kotlin Fundamentals: Functions and Classes',
-      content: 'Learn about Functions and Classes.',
-      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=7200',
-      duration: 35,
-      order: 3,
-      type: 'VIDEO',
-    },
-    {
-      courseId: course4.id,
-      curriculumSectionId: prm392Section3.id,
-      title: 'UI Design with XML Layouts',
-      content: 'Learn about Creating user interfaces using XML layout files.',
-      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=7700',
-      duration: 30,
-      order: 1,
-      type: 'VIDEO',
-    },
-    {
-      courseId: course4.id,
-      curriculumSectionId: prm392Section3.id,
-      title: 'Views and ViewGroups',
-      content: 'Learn about different views and view groups in Android.',
-      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=8200',
-      duration: 40,
-      order: 2,
-      type: 'VIDEO',
-    },
-    {
-      courseId: course4.id,
-      curriculumSectionId: prm392Section3.id,
-      title: 'Material Design',
-      content: 'Implement Material Design principles in your app.',
-      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=8700',
-      duration: 35,
-      order: 3,
-      type: 'VIDEO',
-    },
-    {
-      courseId: course4.id,
-      curriculumSectionId: prm392Section4.id,
-      title: 'Activity Lifecycle',
-      content: 'Understand the Android activity lifecycle and its methods.',
-      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=9200',
-      duration: 30,
-      order: 1,
-      type: 'VIDEO',
-    },
-    {
-      courseId: course4.id,
-      curriculumSectionId: prm392Section4.id,
-      title: 'Intent and Navigation',
-      content: 'Use intents for navigation between activities.',
-      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=9700',
-      duration: 40,
-      order: 2,
-      type: 'VIDEO',
-    },
-    {
-      courseId: course4.id,
-      curriculumSectionId: prm392Section4.id,
-      title: 'Fragments',
-      content: 'Create and manage fragments for flexible UI design.',
-      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=10200',
+      curriculumSectionId: prm392S2.id,
+      title: 'Simple Widgets',
+      content: 'Core widgets: TextView, EditText, Button, ImageView, and basic interactions.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=6100',
       duration: 25,
       order: 3,
       type: 'VIDEO',
-    },
-    {
-      courseId: course4.id,
-      curriculumSectionId: prm392Section6.id,
-      title: 'SharedPreferences',
-      content: 'Store simple data using SharedPreferences.',
-      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=10700',
-      duration: 45,
-      order: 1,
-      type: 'VIDEO',
-    },
-    {
-      courseId: course4.id,
-      curriculumSectionId: prm392Section6.id,
-      title: 'SQLite Database',
-      content: 'Implement local database using SQLite.',
-      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=11200',
-      duration: 50,
-      order: 2,
-      type: 'VIDEO',
-    },
-    {
-      courseId: course4.id,
-      curriculumSectionId: prm392Section6.id,
-      title: 'Room Database',
-      content: 'Use Room persistence library for database operations.',
-      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=11700',
-      duration: 40,
-      order: 3,
-      type: 'VIDEO',
-    },
-    {
-      courseId: course4.id,
-      curriculumSectionId: prm392Section8.id,
-      title: 'HTTP Requests',
-      content: 'Make HTTP requests using Retrofit and OkHttp.',
-      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=12200',
-      duration: 30,
-      order: 1,
-      type: 'VIDEO',
-    },
-    {
-      courseId: course4.id,
-      curriculumSectionId: prm392Section8.id,
-      title: 'JSON Parsing',
-      content: 'Parse JSON data using Gson and other libraries.',
-      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=12700',
-      duration: 35,
-      order: 2,
-      type: 'VIDEO',
-    },
-    {
-      courseId: course4.id,
-      curriculumSectionId: prm392Section14.id,
-      title: 'App Signing and Release',
-      content: 'Sign your app and prepare for release on Google Play Store.',
-      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=12700',
-      duration: 35,
-      order: 1,
-      type: 'VIDEO',
-    },
-  ],
-});
+    }
+  })
 
+
+  const constraintLayout = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S2.id,
+      title: 'ConstraintLayout',
+      content: 'Build responsive UIs using ConstraintLayout: constraints, chains, guidelines.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=6400',
+      duration: 25,
+      order: 4,
+      type: 'VIDEO',
+    }
+  })
+
+  const styleTheme = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S2.id,
+      title: 'Style & Theme',
+      content: 'Apply styles and themes; dark mode, color schemes, and material theming.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=6700',
+      duration: 25,
+      order: 5,
+      type: 'VIDEO',
+    }
+  })
+  
+  const bindingViews = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S2.id,
+      title: 'Binding Views and Handling Actions',
+      content: 'View binding/data binding, event listeners, click handling, and form validation.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=7000',
+      duration: 30,
+      order: 6,
+      type: 'VIDEO',
+    }
+  })
+  
+  const activityLifecycle = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S3.id,
+      title: 'Activity Lifecycle',
+      content: 'Lifecycle callbacks (onCreate to onDestroy), state handling, and best practices.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=7300',
+      duration: 25,
+      order: 7,
+      type: 'VIDEO',
+    }
+  })
+ 
+  const intentsLinkingActivities = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S3.id,
+      title: 'Intents and Linking Activities',
+      content: 'Explicit/implicit intents, passing data, and navigation between activities.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=7600',
+      duration: 25,
+      order: 8,
+      type: 'VIDEO',
+    }
+  })
+ 
+  const fractment = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S3.id,
+      title: 'Fragment',
+      content: 'Create and manage fragments; fragment transactions, back stack, communication.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=7900',
+      duration: 25,
+      order: 9,
+      type: 'VIDEO',
+    }
+  })
+
+  const recyclerView = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S4.id,
+      title: 'RecyclerView',
+      content: 'Lists with RecyclerView: adapters, view holders, item decoration, diff util.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=8200',
+      duration: 30,
+      order: 10,
+      type: 'VIDEO',
+    }
+  })
+
+  const displayImageMenu = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S4.id,
+      title: 'Display Image & Menu',
+      content: 'Load/display images, options/context menus, toolbar and menu actions.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=8500',
+      duration: 30,
+      order: 11,
+      type: 'VIDEO',
+    }
+  })
+
+  const androidPermission = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S5.id,
+      title: 'Android Permission',
+      content: 'Runtime permissions, permission checks, and user flows.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=8800',
+      duration: 20,
+      order: 12,
+      type: 'VIDEO',
+    }
+  })
+
+  const androidNotification = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S5.id,
+      title: 'Android Notification',
+      content: 'Notification channels, styles, actions, and background notifications.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=9000',
+      duration: 25,
+      order: 13,
+      type: 'VIDEO',
+    }
+  })
+
+  const dataStorageDatabase = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S6.id,
+      title: 'Data Storage & Database',
+      content: 'SharedPreferences, SQLite, and Room for structured local storage.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=9300',
+      duration: 35,
+      order: 14,
+      type: 'VIDEO',
+    }
+  })
+
+  const contentProviders = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S6.id,
+      title: 'Content Providers',
+      content: 'Share data between apps with content providers, URIs, and permissions.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=9600',
+      duration: 30,
+      order: 15,
+      type: 'VIDEO',
+    }
+  })
+
+  const service = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S7.id,
+      title: 'Service',
+      content: 'Foreground/background services, lifecycle, and use cases.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=9900',
+      duration: 25,
+      order: 16,
+      type: 'VIDEO',
+    }
+  })
+ 
+  const multithread = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S7.id,
+      title: 'Multithread',
+      content: 'Threads, Handlers, AsyncTask alternatives, and coroutines basics.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=10200',
+      duration: 30,
+      order: 17,
+      type: 'VIDEO',
+    }
+  })
+  const maps = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S8.id,
+      title: 'Maps',
+      content: 'Google Maps integration, markers, geocoding, and user location.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=10500',
+      duration: 30,
+      order: 18,
+      type: 'VIDEO',
+    }
+  })
+  const webservices = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S9.id,
+      title: 'Webservices',
+      content: 'REST web services, Retrofit setup, JSON parsing, and error handling.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=10800',
+      duration: 35,
+      order: 19,
+      type: 'VIDEO',
+    }
+  })
+  const sockets = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S9.id,
+      title: 'Sockets',
+      content: 'TCP/UDP sockets, realtime communication basics, and threading concerns.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=11100',
+      duration: 30,
+      order: 20,
+      type: 'VIDEO',
+    }
+  })
+  const broadcastReceiver = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S5.id,
+      title: 'Broadcast Receiver',
+      content: 'Receive system/app broadcasts, dynamic vs static receivers, and intents.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=11400',
+      duration: 25,
+      order: 21,
+      type: 'VIDEO',
+    }
+  })
+  const androidArchitecture = await prisma.lesson.create({
+    data: {
+      courseId: course4.id,
+      curriculumSectionId: prm392S10.id,
+      title: 'Android Architecture',
+      content: 'App architecture patterns (MVVM), architecture components, and best practices.',
+      videoUrl: 'https://www.youtube.com/embed/dgdgNw4VtC0?si=lbMTmKXtM93dOY3o&start=11700',
+      duration: 35,
+      order: 22,
+      type: 'VIDEO',
+    }
+  })
+
+  // Add notes and sample resources for first two PRM392 lessons (use created IDs directly)
+  await prisma.lesson.update({
+    where: { id: androidOverview.id },
+    data: {
+      notes: ['Mục tiêu bài học', 'Khái quát nền tảng Android', 'Thiết lập môi trường']
+    }
+  })
+  await prisma.lesson.update({
+    where: { id: androidStructure.id },
+    data: {
+      notes: [
+        'Cấu trúc dự án Android',
+        'Xây dựng ứng dụng Android đầu tiên',
+        'Các thành phần ứng dụng Android'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: simpleWidgets.id },
+    data: {
+      notes: [
+        'Giới thiệu Views, ViewGroups và phân cấp View',
+        'Các đơn vị đo lường trong Android (px, dp, sp, dpi)',
+        'Các loại Widget UI phổ biến',
+        'Sử dụng ViewGroups để bố cục'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: constraintLayout.id },
+    data: {
+      notes: [
+        'Giới thiệu ConstraintLayout và ưu điểm',
+        'Thuộc tính và cách tạo Constraints (Anchors, Bias)',
+        'Sử dụng Chains để căn chỉnh và phân phối View',
+        'Sử dụng Guideline, Barrier, Flow để thiết kế UI phức tạp'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: styleTheme.id },
+    data: {
+      notes: [
+        'Khái niệm Style trong Android và cách định nghĩa, sử dụng',
+        'Kế thừa Style và bảng màu Style',
+        'Khái niệm Theme và cách ứng dụng cho Activity/Application',
+        'Tùy chỉnh Theme cho dự án Android'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: bindingViews.id },
+    data: {
+      notes: [
+        'Liên kết Views trong code Java/Kotlin',
+        'Các cách xử lý sự kiện UI (onClick, onTouch, v.v.)',
+        'Các Listener sự kiện phổ biến cho Views và AdapterView',
+        'Sử dụng các thành phần điều khiển đầu vào (EditText, CheckBox, RadioButton, Switch, Spinner)'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: activityLifecycle.id },
+    data: {
+      notes: [
+        'Khái niệm và định nghĩa Activity',
+        'Vòng đời của Activity và các trạng thái',
+        'Các hàm Callback chính trong vòng đời Activity (onCreate, onStart, onResume, onPause, onStop, onDestroy)',
+        'Các phương thức liên quan đến vòng đời Activity (finish, onBackPressedDispatcher)'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: intentsLinkingActivities.id },
+    data: {
+      notes: [
+        'Khái niệm Intent và vai trò',
+        'Các loại Intent: Explicit và Implicit Intent',
+        'Truyền dữ liệu giữa các Activity bằng Extras',
+        'Điều hướng giữa các Activity và Activity Stack (startActivity, startActivityForResult)'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: recyclerView.id },
+    data: {
+      notes: [
+        'RecyclerView là gì và ưu điểm (tái sử dụng View)',
+        'Các thành phần chính của RecyclerView (LayoutManager, Adapter, ViewHolder)',
+        'Các bước triển khai RecyclerView',
+        'Sử dụng RecyclerView để hiển thị danh sách dữ liệu'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: displayImageMenu.id },
+    data: {
+      notes: [
+        'Sử dụng ImageView và thuộc tính scaleType',
+        'Hiển thị hình ảnh từ tài nguyên cục bộ và URL (Picasso, Glide)',
+        'Các loại Menu trong Android (Options Menu, Context Menu, Popup Menu)',
+        'Các bước triển khai Options Menu và Context Menu'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: androidPermission.id },
+    data: {
+      notes: [
+        'Quyền truy cập trong Android (Android Permission)',
+        'Phân loại quyền: Normal Permissions và Dangerous Permissions',
+        'Các nhóm quyền và cách bật/tắt quyền thủ công',
+        'Quy trình xử lý và yêu cầu quyền thời gian chạy'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: androidNotification.id },
+    data: {
+      notes: [
+        'Thông báo (Notification) là gì và cấu trúc',
+        'Kênh thông báo (Notification channels) và tầm quan trọng',
+        'Tạo kênh thông báo và mức độ quan trọng/ưu tiên',
+        'Tạo, hiển thị và xử lý các hành động của thông báo'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: dataStorageDatabase.id },
+    data: {
+      notes: [
+        'Lưu trữ dữ liệu với Shared Preferences',
+        'Lưu trữ tệp nội bộ và bên ngoài (Internal/External Files)',
+        'Cơ sở dữ liệu SQLite: khái niệm và các thao tác SQL cơ bản',
+        'Cơ sở dữ liệu Room: khái niệm và các bước triển khai'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: contentProviders.id },
+    data: {
+      notes: [
+        'Content Provider là gì và vai trò',
+        'Content Resolver là gì và cách Content Provider/Resolver hoạt động cùng nhau',
+        'Các thành phần của một Content Provider (Contract, URI, MIME Type)',
+        'Triển khai Content Provider và cấp quyền trong Manifest'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: service.id },
+    data: {
+      notes: [
+        'Service là gì và khi nào sử dụng',
+        'Các loại Service: Started Service và Bound Service',
+        'Vòng đời của Service và các hàm Callback',
+        'Foreground Services và giới hạn của Background Services',
+        'Intent Service'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: multithread.id },
+    data: {
+      notes: [
+        'Main Thread (UI Thread) và các giới hạn',
+        'Worker Thread và các tác vụ nền',
+        'Hai quy tắc quan trọng cho Android threads',
+        'Các phương pháp tạo Worker Thread và cập nhật UI (runOnUiThread, Executor)'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: fractment.id },
+    data: {
+      notes: [
+        'Fragment là gì và ưu điểm (tái sử dụng UI, hỗ trợ nhiều kích thước màn hình)',
+        'Cách tạo và thêm Fragment vào Activity (tĩnh và động)',
+        'Tương tác giữa Fragment và Activity',
+        'Vòng đời của Fragment và các lớp con Fragment phổ biến'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: maps.id },
+    data: {
+      notes: [
+        'Các bước thêm Google Map vào ứng dụng Android (Play Services, MapFragment, API Key, Permissions)',
+        'Các phương thức của Google Map (đặt camera, markers, lines)',
+        'Truy cập vị trí hiện tại của điện thoại',
+        'Sử dụng LocationManager và các sự kiện cập nhật vị trí'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: webservices.id },
+    data: {
+      notes: [
+        'Giới thiệu Web Services và các phương thức HTTP (GET, POST, PUT, DELETE)',
+        'Sử dụng Retrofit để gọi API trong Android',
+        'Các Annotation trong Retrofit (@Body, @Path, @Url, @Query, @Field)',
+        'Các bước triển khai Retrofit: API Interface, Model, Retrofit instance và Call'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: sockets.id },
+    data: {
+      notes: [
+        'Khái niệm Socket và giao tiếp Client/Server',
+        'Các phương thức lập trình Socket (socket, bind, listen, connect, accept, read, write)',
+        'Sử dụng InputStream và OutputStream trong Java để đọc/ghi dữ liệu',
+        'Các bước tạo chương trình Server và Client bằng Socket'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: broadcastReceiver.id },
+    data: {
+      notes: [
+        'Khái niệm Broadcast và các loại (System broadcast, Custom broadcast)',
+        'Broadcast Receiver là gì và vai trò',
+        'Cách triển khai Broadcast Receiver: tạo và đăng ký (Static, Dynamic)',
+        'Các loại Custom Broadcast (Ordered, Normal, Local Broadcast)'
+      ]
+    }
+  }),
+  await prisma.lesson.update({
+    where: { id: androidArchitecture.id },
+    data: {
+      notes: [
+        'Giới thiệu các mô hình kiến trúc trong Android',
+        'Mô hình MVC (Model-View-Controller) và các thành phần, ưu nhược điểm',
+        'Mô hình MVP (Model-View-Presenter) và các thành phần, ưu nhược điểm',
+        'Mô hình MVVM (Model-View-ViewModel) và các thành phần, ưu nhược điểm'
+      ]
+    }
+  })
+
+
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: androidOverview.id,
+        title: 'Slides - Android Overview',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: androidOverview.id,
+        title: 'Sample Project - HelloAndroid',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: androidOverview.id,
+        title: 'Reading - Android History',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: androidStructure.id,
+        title: 'Slides - AndroidStructure',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: androidStructure.id,
+        title: 'Sample Project - AndroidStructure',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: androidStructure.id,
+        title: 'Reading - AndroidStructure',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: simpleWidgets.id,
+        title: 'Slides - SimpleWidgets',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: simpleWidgets.id,
+        title: 'Sample Project - SimpleWidgets',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: simpleWidgets.id,
+        title: 'Reading - SimpleWidgets',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: constraintLayout.id,
+        title: 'Slides - ConstraintLayout',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: constraintLayout.id,
+        title: 'Sample Project - ConstraintLayout',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: constraintLayout.id,
+        title: 'Reading - ConstraintLayout',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: styleTheme.id,
+        title: 'Slides - StyleTheme',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: styleTheme.id,
+        title: 'Sample Project - StyleTheme',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: styleTheme.id,
+        title: 'Reading - StyleTheme',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: bindingViews.id,
+        title: 'Slides - BindingViews',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: bindingViews.id,
+        title: 'Sample Project - BindingViews',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: bindingViews.id,
+        title: 'Reading - BindingViews',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: activityLifecycle.id,
+        title: 'Slides - ActivityLifecycle',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: activityLifecycle.id,
+        title: 'Sample Project - ActivityLifecycle',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: activityLifecycle.id,
+        title: 'Reading - ActivityLifecycle',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: intentsLinkingActivities.id,
+        title: 'Slides - IntentsLinkingActivities',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: intentsLinkingActivities.id,
+        title: 'Sample Project - IntentsLinkingActivities',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: intentsLinkingActivities.id,
+        title: 'Reading - IntentsLinkingActivities',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: fractment.id,
+        title: 'Slides - Fractment',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: fractment.id,
+        title: 'Sample Project - Fractment',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: fractment.id,
+        title: 'Reading - Fractment',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+
+
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: recyclerView.id,
+        title: 'Slides - RecyclerView',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: recyclerView.id,
+        title: 'Sample Project - RecyclerView',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: recyclerView.id,
+        title: 'Reading - RecyclerView',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+
+
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: displayImageMenu.id,
+        title: 'Slides - DisplayImageMenu',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: displayImageMenu.id,
+        title: 'Sample Project - DisplayImageMenu',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: displayImageMenu.id,
+        title: 'Reading - DisplayImageMenu',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+
+
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: androidPermission.id,
+        title: 'Slides - AndroidPermission',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: androidPermission.id,
+        title: 'Sample Project - AndroidPermission',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: androidPermission.id,
+        title: 'Reading - AndroidPermission',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+
+
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: androidNotification.id,
+        title: 'Slides - AndroidNotification',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: androidNotification.id,
+        title: 'Sample Project - AndroidNotification',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: androidNotification.id,
+        title: 'Reading - AndroidNotification',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+
+
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: dataStorageDatabase.id,
+        title: 'Slides - DataStorageDatabase',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: dataStorageDatabase.id,
+        title: 'Sample Project - DataStorageDatabase',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: dataStorageDatabase.id,
+        title: 'Reading - DataStorageDatabase',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+
+
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: contentProviders.id,
+        title: 'Slides - ContentProviders',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: contentProviders.id,
+        title: 'Sample Project - ContentProviders',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: contentProviders.id,
+        title: 'Reading - ContentProviders',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: contentProviders.id,
+        title: 'Slides - ContentProviders',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: contentProviders.id,
+        title: 'Sample Project - ContentProviders',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: contentProviders.id,
+        title: 'Reading - ContentProviders',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+  
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: service.id,
+        title: 'Slides - Service',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: service.id,
+        title: 'Sample Project - Service',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: service.id,
+        title: 'Reading - Service',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+  
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: multithread.id,
+        title: 'Slides - Multithread',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: multithread.id,
+        title: 'Sample Project - Multithread',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: multithread.id,
+        title: 'Reading - Multithread',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+  
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: maps.id,
+        title: 'Slides - Maps',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: maps.id,
+        title: 'Sample Project - Maps',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: maps.id,
+        title: 'Reading - Maps',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+  
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: webservices.id,
+        title: 'Slides - Webservices',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: webservices.id,
+        title: 'Sample Project - Webservices',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: webservices.id,
+        title: 'Reading - Webservices',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+  
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: sockets.id,
+        title: 'Slides - Sockets',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: sockets.id,
+        title: 'Sample Project - Sockets',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: sockets.id,
+        title: 'Reading - Sockets',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+  
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: broadcastReceiver.id,
+        title: 'Slides - BroadcastReceiver',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: broadcastReceiver.id,
+        title: 'Sample Project - BroadcastReceiver',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: broadcastReceiver.id,
+        title: 'Reading - BroadcastReceiver',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+  
+  await prisma.lessonResource.createMany({
+    data: [
+      {
+        lessonId: androidArchitecture.id,
+        title: 'Slides - AndroidArchitecture',
+        type: 'pdf',
+        sizeText: '1.8 MB',
+        url: 'https://example.com/resources/android-overview-slides.pdf',
+        order: 1
+      },
+      {
+        lessonId: androidArchitecture.id,
+        title: 'Sample Project - AndroidArchitecture',
+        type: 'zip',
+        sizeText: '850 KB',
+        url: 'https://example.com/resources/hello-android.zip',
+        order: 2
+      },
+      {
+        lessonId: androidArchitecture.id,
+        title: 'Reading - AndroidArchitecture',
+        type: 'docx',
+        sizeText: '300 KB',
+        url: 'https://example.com/resources/android-history.pdf',
+        order: 3
+      }
+    ]
+  })
+  
   // Create sample blog posts
   await prisma.blogPost.createMany({
     data: [

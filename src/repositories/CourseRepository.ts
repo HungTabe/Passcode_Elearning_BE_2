@@ -84,12 +84,14 @@ export class CourseRepository {
 
   async findByIdWithCurriculum(id: string): Promise<CourseDetailResponse | null> {
     try {
-      // For now, use the existing structure until Prisma client is regenerated
       const course = await prisma.course.findUnique({
         where: { id },
         include: {
-          lessons: {
-            orderBy: { order: 'asc' }
+          curriculum: {
+            orderBy: { order: 'asc' },
+            include: {
+              lessons: { orderBy: { order: 'asc' } }
+            }
           },
           _count: {
             select: { enrollments: true }
@@ -98,8 +100,18 @@ export class CourseRepository {
       })
       if (!course) return null
       
-      // Create mock curriculum structure from existing lessons
-      const curriculumSections = this.createMockCurriculum(course.lessons)
+      // Map real curriculum sections and lessons
+      const curriculumSections = (course.curriculum ?? []).map(section => ({
+        id: section.id,
+        title: section.title,
+        lessons: (section.lessons ?? []).map(lesson => ({
+          id: lesson.id,
+          title: lesson.title,
+          duration: this.formatDuration(lesson.duration),
+          // Fallback to 'video' string for compatibility
+          type: ((lesson as unknown as { type?: string | null }).type ?? 'VIDEO').toString().toLowerCase()
+        }))
+      }))
       
       return {
         id: course.id,
